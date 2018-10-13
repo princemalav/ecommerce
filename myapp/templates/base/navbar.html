@@ -1,0 +1,57 @@
+{% load static %}
+{% block base_head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integri="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+
+
+
+{% url 'home' as home_url %}
+{% url 'register' as register_url %}
+{% url 'contact' as contact_url %}
+{% url 'list view' as product_url %}
+{% url 'login' as login_url %}
+{% url 'cart-home' as cart_home %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+<div class="container">
+  <a class="navbar-brand" href="{{ home_url }}">
+  <img src="https://www.getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">{% if brand %}{{ brand }}{% else %}eCommerce {% endif %}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item {% if request.path == home_url %}active{% endif %} ">
+        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
+        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+      </li>
+      
+      <li class="nav-item {% if request.path == product_url %}active{% endif %}">
+        <a class="nav-link" href="{% url 'list view' %}">Products</a>
+      </li>
+      {% if request.user.is_authenticated %}
+      <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+        <a class="nav-link" href="#">logout</a>
+      </li>
+      {% else %}
+      <li class="nav-item {% if request.path == login_url %}active{% endif %}">
+        <a class="nav-link" href="{% url 'login' %}">login</a>
+      </li>
+      <li class="nav-item {% if request.path == register_url %}active{% endif %}">
+        <a class="nav-link" href="{% url 'register' %}">Register</a>
+      </li>
+      {% endif %}
+      <li class="nav-item {% if request.path == cart_home %}active{% endif %}">
+        <a class="nav-link" href="{{ cart_home }}"> {{ request.session.cart_items }} <i class="fas fa-cart-plus" aria-hidden='true'></i></a>
+      </li>
+      
+    </ul>
+    {% include 'search/snippets/search-form.html' %}
+  </div>
+</div>
+</nav>

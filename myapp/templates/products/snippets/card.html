@@ -1,0 +1,21 @@
+
+{% load static %}
+
+{% block base_head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integri="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">
+{% endblock %}
+
+<div class="card" style="width: 18rem;">
+	{% if instance.image %}
+	<a href="{{ instance.get_absolute_url }}">
+  <img class="card-img-top" src="{{ instance.image.url }}"  alt="Card image cap">
+  </a>
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{ instance.title }}</h5>
+    <p class="card-text">{{ instance.description }}</p>
+    <a href="{{ instance.get_absolute_url }}" class="btn btn-primary">View</a>
+    <!--<a href="{% url 'slug detail' slug=instance.slug %}" class="btn btn-warning">url shortcut</a>-->
+  </div>
+</div>

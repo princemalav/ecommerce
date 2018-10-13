@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base_head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integri="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+	{% if query %}
+	<div class="col-12">
+		Results for <b>{{ query }}</b>
+		<hr/>
+	</div>
+	{% else %}
+	<div class="col-12 col-md-6 mx-auto py-5">
+		{% include 'search/snippets/search-form.html' %}
+	</div>
+	<div class="col-12">
+		<hr>
+	</div>
+	{% endif %}
+</div>
+	<div class="container">
+		<div class='row'>
+
+	{% for obj in object_list %}
+	<div class="col">
+		{{ forloop.counter }}
+	{% include 'products/snippets/card.html' with instance=obj %}
+	</div>
+	{% endfor %}
+</div>
+</div>
+{% endblock %}
