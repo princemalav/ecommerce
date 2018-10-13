@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from .models import Product
 from django.http import Http404
 from carts.models import Cart
+from django.utils.http import is_safe_url
 
 # Create your views here.
 def home_page(request):
@@ -53,6 +54,9 @@ def login_page(request):
 	}
 	#print("user logged in ")
 	#print(request.user.is_authenticated)
+	next_ = request.GET.get('next')
+	next_post = request.POST.get('next')
+	redirect_path = next_ or next_post or None
 	if form.is_valid():
 		print(form.cleaned_data)
 
@@ -62,7 +66,11 @@ def login_page(request):
 
 		if user is not None:
 			login(request, user)
-			print(request.user.is_authenticated)
+			if is_safe_url(redirect_path,request.get_host()):
+				return redirect(redirect_path)
+			else:
+				return redirect('/login')
+			#print(request.user.is_authenticated)
 
 			#context['form'] = LoginForm()
 			#return redirect(request,'/login')

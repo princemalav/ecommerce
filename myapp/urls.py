@@ -2,6 +2,7 @@ from django.urls import path
 from django.conf.urls import include
 from . import views
 from django.views.generic import TemplateView
+from django.contrib.auth.views import LogoutView
 
 
 urlpatterns=[
@@ -9,6 +10,7 @@ urlpatterns=[
    path('about',views.about_page,name='about'),
    path('contact',views.contact_page,name='contact'),
    path('login',views.login_page,name='login'),
+   path('logout',LogoutView.as_view(),name='logout'),
    path('register',views.register_page,name='register'),
    #path('products',views.Productlistview.as_view()),
    #path('products/<int:pk>/',views.ProductDetailView.as_view()),

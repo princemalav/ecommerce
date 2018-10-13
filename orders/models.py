@@ -27,7 +27,7 @@ class Order(models.Model):
 	def update_total(self):
 		cart_total = self.cart.total
 		shipping_total = self.shipping_total
-		new_total = cart_total + shipping_total
+		new_total = float(cart_total) + float(shipping_total)
 		self.total = new_total
 		self.save()
 		return new_total
@@ -43,7 +43,7 @@ def post_save_cart_total(sender , instance ,created ,  *args , **kwargs):
 	if not created:
 		cart_obj = instance
 		cart_total = cart_obj.total
-		cart_id = cart_obj.cart_id
+		cart_id = cart_obj.id
 		qs = Order.objects.filter(cart__id=cart_id)
 		if qs.count()==1:
 			order_obj = qs.first()
